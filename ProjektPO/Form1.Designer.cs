@@ -109,6 +109,10 @@ namespace ProjektPO
             this.dataGridLeft.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridLeft.Size = new System.Drawing.Size(479, 252);
             this.dataGridLeft.TabIndex = 10;
+            this.dataGridLeft.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridLeft_CellClick);
+            this.dataGridLeft.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridLeft_DragDrop);
+            this.dataGridLeft.DragEnter += new System.Windows.Forms.DragEventHandler(this.dataGridLeft_DragEnter);
+            this.dataGridLeft.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridLeft_DragOver);
             this.dataGridLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridLeft_MouseDown);
             this.dataGridLeft.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridLeft_MouseMove);
             // 
@@ -164,6 +168,8 @@ namespace ProjektPO
             this.dataGridRight.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridRight_DragDrop);
             this.dataGridRight.DragEnter += new System.Windows.Forms.DragEventHandler(this.dataGridRight_DragEnter);
             this.dataGridRight.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridRight_DragOver);
+            this.dataGridRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridRight_MouseDown);
+            this.dataGridRight.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridRight_MouseMove);
             // 
             // dataGridViewTextBoxColumn5
             // 

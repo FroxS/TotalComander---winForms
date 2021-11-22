@@ -14,12 +14,8 @@ namespace ProjektPO
 {
     public partial class Form1 : Form
     {
-        //private string[] fileAndDirectory;
-        private string[] file;
-        private string[] fileRight;
         private Rectangle dragBoxFromMouseDown;
         private object valueFromMouseDown;
-        //private string[] directory;
 
         private PanelComander leftComander;
         private PanelComander rightComander;
@@ -81,8 +77,62 @@ namespace ProjektPO
             rightComander.fillGrid();
         }
 
+        private void dataGridLeft_MouseDown(object sender, MouseEventArgs e)
+        {
+            gridMouseDown(leftComander, e);
+        }
+
+        private void dataGridRight_MouseDown(object sender, MouseEventArgs e)
+        {
+            gridMouseDown(rightComander, e);
+        }
+
+        private void dataGridLeft_MouseMove(object sender, MouseEventArgs e)
+        {
+            gridMouseMove(leftComander, e);
+        }
+
+        private void dataGridRight_MouseMove(object sender, MouseEventArgs e)
+        {
+            gridMouseMove(rightComander, e);
+        }
+
+        private void dataGridRight_DragEnter(object sender, DragEventArgs e)
+        {
+            gridDragEnter(e);
+        }
+
+        private void dataGridLeft_DragEnter(object sender, DragEventArgs e)
+        {
+            gridDragEnter(e);
+        }
+
+        private void dataGridRight_DragOver(object sender, DragEventArgs e)
+        {
+            gridDragOver(e);
+        }
+
+        private void dataGridLeft_DragOver(object sender, DragEventArgs e)
+        {
+            gridDragOver(e);
+        }
+
+        private void dataGridRight_DragDrop(object sender, DragEventArgs e)
+        {
+            gridDragDrop(rightComander, e);
+            rightComander.fillGrid();
+            leftComander.fillGrid();
+        }
+
+        private void dataGridLeft_DragDrop(object sender, DragEventArgs e)
+        {
+            gridDragDrop(leftComander, e);
+            rightComander.fillGrid();
+            leftComander.fillGrid();
+        }
+
         //Grid from drop
-        private void GridMouseMove(DataGridView dgv,MouseEventArgs e)
+        private void gridMouseMove(PanelComander pc, MouseEventArgs e)
         {
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
@@ -90,21 +140,21 @@ namespace ProjektPO
                 if (dragBoxFromMouseDown != Rectangle.Empty && !dragBoxFromMouseDown.Contains(e.X, e.Y))
                 {
                     // Proceed with the drag and drop, passing in the list item.                    
-                    DragDropEffects dropEffect = dgv.DoDragDrop(valueFromMouseDown, DragDropEffects.Copy);
+                    DragDropEffects dropEffect = pc.Dgv.DoDragDrop(valueFromMouseDown, DragDropEffects.Copy);
                 }
             }
         }
-        
+
         //Grid from drop
-        private void gridMouseDown(DataGridView dgv,MouseEventArgs e)
+        private void gridMouseDown(PanelComander pc, MouseEventArgs e)
         {
             // Get the index of the item the mouse is below.
-            var hittestInfo = dgv.HitTest(e.X, e.Y);
+            var hittestInfo = pc.Dgv.HitTest(e.X, e.Y);
 
             if (hittestInfo.RowIndex != -1 && hittestInfo.ColumnIndex != -1)
             {
                 //valueFromMouseDown = dataGrid1.Rows[hittestInfo.RowIndex].Cells[hittestInfo.ColumnIndex].Value;
-                valueFromMouseDown = dgv.Rows[hittestInfo.RowIndex].Cells[0].Value;
+                valueFromMouseDown = pc.Dgv.Rows[hittestInfo.RowIndex].Cells[0].Value;
                 if (valueFromMouseDown != null)
                 {
                     // Remember the point where the mouse down occurred. 
@@ -134,11 +184,11 @@ namespace ProjektPO
         }
 
         //Grid to drop
-        private void gridDragDrop(DataGridView dgv,DragEventArgs e, PanelComander pc = null)
+        private void gridDragDrop(PanelComander pc, DragEventArgs e)
         {
             // The mouse locations are relative to the screen, so they must be 
             // converted to client coordinates.
-            Point clientPoint = dgv.PointToClient(new Point(e.X, e.Y));
+            Point clientPoint = pc.Dgv.PointToClient(new Point(e.X, e.Y));
 
             // If the drag operation was a copy then add the row to the other control.
             if (e.Effect == DragDropEffects.Copy)
@@ -146,8 +196,8 @@ namespace ProjektPO
                 string cellvalue = e.Data.GetData(typeof(string)) as string;
                 if (!(valueFromMouseDown is null))
                 {
-                    var hittest = dgv.HitTest(clientPoint.X, clientPoint.Y);
-                    if(!(pc is null))
+                    var hittest = pc.Dgv.HitTest(clientPoint.X, clientPoint.Y);
+                    if (!(pc is null))
                     {
                         moveFile(cellvalue, pc.SourceDirectory);
                     }
@@ -155,12 +205,12 @@ namespace ProjektPO
                     {
                         if (hittest.ColumnIndex != -1 && hittest.RowIndex != -1)
                         {
-                            moveFile(cellvalue, Path.GetDirectoryName(dgv[0, hittest.RowIndex].Value.ToString()));
+                            moveFile(cellvalue, Path.GetDirectoryName(pc.Dgv[0, hittest.RowIndex].Value.ToString()));
                             //fillGrid(dataGridLeft);
                         }
                     }
 
-                    
+
                 }
                 else
                 {
@@ -172,35 +222,6 @@ namespace ProjektPO
 
             }
         }
-
-        private void dataGridLeft_MouseDown(object sender, MouseEventArgs e)
-        {
-            gridMouseDown(dataGridLeft, e);
-        }
-
-        private void dataGridLeft_MouseMove(object sender, MouseEventArgs e)
-        {
-            GridMouseMove(dataGridLeft, e);
-        }
-
-        private void dataGridRight_DragEnter(object sender, DragEventArgs e)
-        {
-            gridDragEnter(e);
-        }
-
-        private void dataGridRight_DragOver(object sender, DragEventArgs e)
-        {
-            gridDragOver(e);
-        }
-
-        private void dataGridRight_DragDrop(object sender, DragEventArgs e)
-        {
-            gridDragDrop(dataGridRight, e, rightComander);
-            rightComander.fillGrid();
-            leftComander.fillGrid();
-        }
-
-
 
 
 
@@ -223,6 +244,24 @@ namespace ProjektPO
                 MessageBox.Show("Błąd programu");
             }
             
+        }
+
+        private void dataGridLeft_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex != -1 && e.ColumnIndex != -1)
+            {
+                string path;
+                if (leftComander.Dgv[0, e.RowIndex].Value is null)
+                    leftComander.fillGrid();
+                else
+                {
+                    if (leftComander.Dgv[3, e.RowIndex].Value is null)
+                    {
+                        path = leftComander.Dgv[0, e.RowIndex].Value.ToString();
+                        leftComander.go(path);
+                    }
+                }
+            }
         }
     }
 }

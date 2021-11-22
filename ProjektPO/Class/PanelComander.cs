@@ -69,6 +69,7 @@ namespace ProjektPO.Class
             table.Columns.Add("typ");
             table.Columns.Add("size");
 
+            dgv.Rows.Add(Path.GetDirectoryName(sourceDirectory), "...");
             foreach (var di in this.getDirectory())
             {
                 DirectoryInfo directory = new DirectoryInfo(di);
@@ -83,6 +84,16 @@ namespace ProjektPO.Class
                 Cursor.Current = Cursors.WaitCursor;
             }
             Cursor.Current = Cursors.Default;
+        }
+
+
+        public void go(string source)
+        {
+            if (!string.IsNullOrEmpty(source))
+            {
+                SourceDirectory = source;
+            }
+            fillGrid();
         }
     }
 }
