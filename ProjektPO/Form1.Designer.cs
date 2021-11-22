@@ -29,222 +29,208 @@ namespace ProjektPO
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnLoad = new System.Windows.Forms.Button();
-            this.tboxDirectory = new System.Windows.Forms.TextBox();
-            this.panelLeft = new System.Windows.Forms.Panel();
-            this.panelRight = new System.Windows.Forms.Panel();
-            this.tboxDrag = new System.Windows.Forms.TextBox();
-            this.dataGrid1 = new System.Windows.Forms.DataGridView();
-            this.nazwa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Typ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Wielkośc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.path = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGrid2 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid2)).BeginInit();
+            this.btnLoadLeft = new System.Windows.Forms.Button();
+            this.tboxDirectoryLeft = new System.Windows.Forms.TextBox();
+            this.tboxDirectoryRight = new System.Windows.Forms.TextBox();
+            this.btnLoadRight = new System.Windows.Forms.Button();
+            this.dataGridLeft = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridRight = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridLeft)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridRight)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnLoad
+            // btnLoadLeft
             // 
-            this.btnLoad.Location = new System.Drawing.Point(326, 42);
-            this.btnLoad.Margin = new System.Windows.Forms.Padding(2);
-            this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(59, 24);
-            this.btnLoad.TabIndex = 1;
-            this.btnLoad.Text = "...";
-            this.btnLoad.UseVisualStyleBackColor = true;
-            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            this.btnLoadLeft.Location = new System.Drawing.Point(435, 52);
+            this.btnLoadLeft.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnLoadLeft.Name = "btnLoadLeft";
+            this.btnLoadLeft.Size = new System.Drawing.Size(79, 30);
+            this.btnLoadLeft.TabIndex = 1;
+            this.btnLoadLeft.Text = "...";
+            this.btnLoadLeft.UseVisualStyleBackColor = true;
+            this.btnLoadLeft.Click += new System.EventHandler(this.btnLoadLeft_Click);
             // 
-            // tboxDirectory
+            // tboxDirectoryLeft
             // 
-            this.tboxDirectory.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.tboxDirectory.Location = new System.Drawing.Point(26, 42);
-            this.tboxDirectory.Margin = new System.Windows.Forms.Padding(2);
-            this.tboxDirectory.Name = "tboxDirectory";
-            this.tboxDirectory.ReadOnly = true;
-            this.tboxDirectory.Size = new System.Drawing.Size(284, 26);
-            this.tboxDirectory.TabIndex = 2;
+            this.tboxDirectoryLeft.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.tboxDirectoryLeft.Location = new System.Drawing.Point(35, 52);
+            this.tboxDirectoryLeft.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tboxDirectoryLeft.Name = "tboxDirectoryLeft";
+            this.tboxDirectoryLeft.ReadOnly = true;
+            this.tboxDirectoryLeft.Size = new System.Drawing.Size(377, 30);
+            this.tboxDirectoryLeft.TabIndex = 2;
             // 
-            // panelLeft
+            // tboxDirectoryRight
             // 
-            this.panelLeft.AllowDrop = true;
-            this.panelLeft.Location = new System.Drawing.Point(34, 110);
-            this.panelLeft.Margin = new System.Windows.Forms.Padding(2);
-            this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(291, 282);
-            this.panelLeft.TabIndex = 3;
+            this.tboxDirectoryRight.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.tboxDirectoryRight.Location = new System.Drawing.Point(717, 52);
+            this.tboxDirectoryRight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tboxDirectoryRight.Name = "tboxDirectoryRight";
+            this.tboxDirectoryRight.ReadOnly = true;
+            this.tboxDirectoryRight.Size = new System.Drawing.Size(375, 30);
+            this.tboxDirectoryRight.TabIndex = 9;
             // 
-            // panelRight
+            // btnLoadRight
             // 
-            this.panelRight.AllowDrop = true;
-            this.panelRight.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.panelRight.Location = new System.Drawing.Point(814, 28);
-            this.panelRight.Margin = new System.Windows.Forms.Padding(2);
-            this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(121, 108);
-            this.panelRight.TabIndex = 4;
-            this.panelRight.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel1_DragDrop);
-            this.panelRight.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel1_DragEnter);
-            this.panelRight.DragLeave += new System.EventHandler(this.panel1_DragLeave);
+            this.btnLoadRight.Location = new System.Drawing.Point(1117, 52);
+            this.btnLoadRight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnLoadRight.Name = "btnLoadRight";
+            this.btnLoadRight.Size = new System.Drawing.Size(77, 30);
+            this.btnLoadRight.TabIndex = 8;
+            this.btnLoadRight.Text = "...";
+            this.btnLoadRight.UseVisualStyleBackColor = true;
+            this.btnLoadRight.Click += new System.EventHandler(this.btnLoadRight_Click);
             // 
-            // tboxDrag
+            // dataGridLeft
             // 
-            this.tboxDrag.Location = new System.Drawing.Point(498, 28);
-            this.tboxDrag.Name = "tboxDrag";
-            this.tboxDrag.Size = new System.Drawing.Size(188, 20);
-            this.tboxDrag.TabIndex = 5;
+            this.dataGridLeft.AllowDrop = true;
+            this.dataGridLeft.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridLeft.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridLeft.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4});
+            this.dataGridLeft.Location = new System.Drawing.Point(35, 149);
+            this.dataGridLeft.Name = "dataGridLeft";
+            this.dataGridLeft.ReadOnly = true;
+            this.dataGridLeft.RowHeadersVisible = false;
+            this.dataGridLeft.RowHeadersWidth = 51;
+            this.dataGridLeft.RowTemplate.Height = 24;
+            this.dataGridLeft.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridLeft.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridLeft.Size = new System.Drawing.Size(479, 252);
+            this.dataGridLeft.TabIndex = 10;
+            this.dataGridLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridLeft_MouseDown);
+            this.dataGridLeft.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridLeft_MouseMove);
             // 
-            // dataGrid1
+            // Column1
             // 
-            this.dataGrid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGrid1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
-            this.dataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nazwa,
-            this.Typ,
-            this.Wielkośc,
-            this.path});
-            this.dataGrid1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.dataGrid1.Location = new System.Drawing.Point(348, 191);
-            this.dataGrid1.Margin = new System.Windows.Forms.Padding(2);
-            this.dataGrid1.Name = "dataGrid1";
-            this.dataGrid1.ReadOnly = true;
-            this.dataGrid1.RowHeadersVisible = false;
-            this.dataGrid1.RowHeadersWidth = 51;
-            this.dataGrid1.RowTemplate.Height = 24;
-            this.dataGrid1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGrid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGrid1.Size = new System.Drawing.Size(196, 172);
-            this.dataGrid1.TabIndex = 6;
-            this.dataGrid1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGrid1_MouseDown);
-            this.dataGrid1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGrid1_MouseMove);
+            this.Column1.HeaderText = "path";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Visible = false;
             // 
-            // nazwa
+            // Column2
             // 
-            this.nazwa.HeaderText = "name";
-            this.nazwa.MinimumWidth = 6;
-            this.nazwa.Name = "nazwa";
-            this.nazwa.ReadOnly = true;
+            this.Column2.HeaderText = "Nazwa";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
             // 
-            // Typ
+            // Column3
             // 
-            this.Typ.HeaderText = "typ";
-            this.Typ.MinimumWidth = 6;
-            this.Typ.Name = "Typ";
-            this.Typ.ReadOnly = true;
+            this.Column3.HeaderText = "Wielkość";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
             // 
-            // Wielkośc
+            // Column4
             // 
-            this.Wielkośc.HeaderText = "size";
-            this.Wielkośc.MinimumWidth = 6;
-            this.Wielkośc.Name = "Wielkośc";
-            this.Wielkośc.ReadOnly = true;
+            this.Column4.HeaderText = "Typ";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
             // 
-            // path
+            // dataGridRight
             // 
-            this.path.HeaderText = "path";
-            this.path.Name = "path";
-            this.path.ReadOnly = true;
-            this.path.Visible = false;
+            this.dataGridRight.AllowDrop = true;
+            this.dataGridRight.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridRight.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridRight.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8});
+            this.dataGridRight.Location = new System.Drawing.Point(717, 149);
+            this.dataGridRight.Name = "dataGridRight";
+            this.dataGridRight.ReadOnly = true;
+            this.dataGridRight.RowHeadersVisible = false;
+            this.dataGridRight.RowHeadersWidth = 51;
+            this.dataGridRight.RowTemplate.Height = 24;
+            this.dataGridRight.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridRight.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridRight.Size = new System.Drawing.Size(479, 252);
+            this.dataGridRight.TabIndex = 11;
+            this.dataGridRight.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridRight_DragDrop);
+            this.dataGridRight.DragEnter += new System.Windows.Forms.DragEventHandler(this.dataGridRight_DragEnter);
+            this.dataGridRight.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridRight_DragOver);
             // 
-            // dataGrid2
+            // dataGridViewTextBoxColumn5
             // 
-            this.dataGrid2.AllowDrop = true;
-            this.dataGrid2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGrid2.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
-            this.dataGrid2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4});
-            this.dataGrid2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.dataGrid2.Location = new System.Drawing.Point(592, 191);
-            this.dataGrid2.Margin = new System.Windows.Forms.Padding(2);
-            this.dataGrid2.Name = "dataGrid2";
-            this.dataGrid2.ReadOnly = true;
-            this.dataGrid2.RowHeadersVisible = false;
-            this.dataGrid2.RowHeadersWidth = 51;
-            this.dataGrid2.RowTemplate.Height = 24;
-            this.dataGrid2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGrid2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGrid2.Size = new System.Drawing.Size(196, 172);
-            this.dataGrid2.TabIndex = 7;
-            this.dataGrid2.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGrid2_DragDrop);
-            this.dataGrid2.DragEnter += new System.Windows.Forms.DragEventHandler(this.dataGrid2_DragEnter);
-            this.dataGrid2.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGrid2_DragOver);
+            this.dataGridViewTextBoxColumn5.HeaderText = "path";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Visible = false;
             // 
-            // dataGridViewTextBoxColumn1
+            // dataGridViewTextBoxColumn6
             // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "name";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn6.HeaderText = "Nazwa";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn2
+            // dataGridViewTextBoxColumn7
             // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "typ";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn7.HeaderText = "Wielkość";
+            this.dataGridViewTextBoxColumn7.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn3
+            // dataGridViewTextBoxColumn8
             // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "size";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "path";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Visible = false;
+            this.dataGridViewTextBoxColumn8.HeaderText = "Typ";
+            this.dataGridViewTextBoxColumn8.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(966, 505);
-            this.Controls.Add(this.dataGrid2);
-            this.Controls.Add(this.dataGrid1);
-            this.Controls.Add(this.tboxDrag);
-            this.Controls.Add(this.panelRight);
-            this.Controls.Add(this.panelLeft);
-            this.Controls.Add(this.tboxDirectory);
-            this.Controls.Add(this.btnLoad);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.ClientSize = new System.Drawing.Size(1288, 622);
+            this.Controls.Add(this.dataGridRight);
+            this.Controls.Add(this.dataGridLeft);
+            this.Controls.Add(this.tboxDirectoryRight);
+            this.Controls.Add(this.btnLoadRight);
+            this.Controls.Add(this.tboxDirectoryLeft);
+            this.Controls.Add(this.btnLoadLeft);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridLeft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridRight)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button btnLoad;
-        private System.Windows.Forms.TextBox tboxDirectory;
-        private System.Windows.Forms.Panel panelLeft;
-        private System.Windows.Forms.Panel panelRight;
-        public System.Windows.Forms.TextBox tboxDrag;
-        public System.Windows.Forms.DataGridView dataGrid1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nazwa;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Typ;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Wielkośc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn path;
-        public System.Windows.Forms.DataGridView dataGrid2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.Button btnLoadLeft;
+        private System.Windows.Forms.TextBox tboxDirectoryLeft;
+        private System.Windows.Forms.TextBox tboxDirectoryRight;
+        private System.Windows.Forms.Button btnLoadRight;
+        private System.Windows.Forms.DataGridView dataGridLeft;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridView dataGridRight;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
     }
 }
 
