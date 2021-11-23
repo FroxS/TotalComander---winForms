@@ -62,6 +62,12 @@
     <Compile Include="Viev\gridView.Designer.cs">
       <DependentUpon>gridView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Viev\WinFolderExecute.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Viev\WinFolderExecute.Designer.cs">
+      <DependentUpon>WinFolderExecute.cs</DependentUpon>
+    </Compile>
     <Compile Include="Viev\WinFileExecute.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <EmbeddedResource Include="Viev\WinFolderExecute.resx">
+      <DependentUpon>WinFolderExecute.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Viev\WinFileExecute.resx">
       <DependentUpon>WinFileExecute.cs</DependentUpon>
     </EmbeddedResource>

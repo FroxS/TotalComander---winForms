@@ -272,14 +272,27 @@ namespace ProjektPO
             //}
             try
             {
-
-                string x = string.Empty;
                 FileAttributes attr = File.GetAttributes(from);
                 if (attr.HasFlag(FileAttributes.Directory))
                 {
+                    bool contents = true;
+                    using (WinFolderExecute settingsForm = new WinFolderExecute())
+                    {
+                        if (settingsForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            contents = settingsForm.Value;
+                            if (settingsForm.Value);
+                        }
+                    }
+
+
+
+
                     //Przenoszony jest folder
-                    
-                    copyDirectory(from, to);
+                    if (chboxMove.Checked)
+                        moveDirectory(from, to, contents);
+                    else
+                        copyDirectory(from, to, contents);
                 }
                 else
                 {
@@ -349,12 +362,48 @@ namespace ProjektPO
             }
         }
 
-        private void copyDirectory(string from, string to)
+        private void copyDirectory(string from, string to, bool contents)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string destfolder = to + "\\" + Path.GetFileName(from);
+                if (!chboxOverwrite.Checked)
+                {
+                    while (Directory.Exists(destfolder))
+                    {
+                        destfolder = to + "\\" + Path.GetFileName(destfolder) + "-kopia";
+                    }
+                }
+
+
+                // TWORZY MI DWA DOLDERY W DÓWCH MIEJSCAH - SPRAWDZIĆ
+                Directory.CreateDirectory(destfolder);
+
+
+                if (contents)
+                {
+                    DirectoryInfo deep = new DirectoryInfo(from);
+
+                    DirectoryInfo[] directories = deep.GetDirectories(".", System.IO.SearchOption.AllDirectories);
+                    foreach(DirectoryInfo di in directories)
+                    {
+                        MessageBox.Show(di.Name);
+                    }
+
+                }
+
+            }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Błąd programu");
+            }
         }
 
-        private void moveDirectory(string from, string to)
+        private void moveDirectory(string from, string to, bool contents)
         {
             throw new NotImplementedException();
         }
