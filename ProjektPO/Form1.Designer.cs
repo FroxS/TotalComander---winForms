@@ -40,11 +40,6 @@ namespace ProjektPO
             this.tboxDirectoryRight = new System.Windows.Forms.TextBox();
             this.btnLoadRight = new System.Windows.Forms.Button();
             this.dataGridRight = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Typ1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.panelTop = new System.Windows.Forms.Panel();
             this.chboxMove = new System.Windows.Forms.CheckBox();
@@ -60,6 +55,11 @@ namespace ProjektPO
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Typ1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridRight)).BeginInit();
             this.panelTop.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -134,6 +134,8 @@ namespace ProjektPO
             // dataGridRight
             // 
             this.dataGridRight.AllowDrop = true;
+            this.dataGridRight.AllowUserToAddRows = false;
+            this.dataGridRight.AllowUserToDeleteRows = false;
             this.dataGridRight.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridRight.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             this.dataGridRight.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -195,46 +197,6 @@ namespace ProjektPO
             this.dataGridRight.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGrid_KeyDown);
             this.dataGridRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridRight_MouseDown);
             this.dataGridRight.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridRight_MouseMove);
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "path";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            this.dataGridViewTextBoxColumn5.Visible = false;
-            // 
-            // Typ1
-            // 
-            this.Typ1.FillWeight = 20.30457F;
-            this.Typ1.HeaderText = "";
-            this.Typ1.MinimumWidth = 6;
-            this.Typ1.Name = "Typ1";
-            this.Typ1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.FillWeight = 126.5651F;
-            this.dataGridViewTextBoxColumn6.HeaderText = "Nazwa";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.FillWeight = 126.5651F;
-            this.dataGridViewTextBoxColumn8.HeaderText = "Data";
-            this.dataGridViewTextBoxColumn8.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.FillWeight = 126.5651F;
-            this.dataGridViewTextBoxColumn7.HeaderText = "Rozmiar";
-            this.dataGridViewTextBoxColumn7.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
             // 
             // panelBottom
             // 
@@ -450,6 +412,47 @@ namespace ProjektPO
             this.panel1.Size = new System.Drawing.Size(586, 44);
             this.panel1.TabIndex = 10;
             // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "path";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Visible = false;
+            // 
+            // Typ1
+            // 
+            this.Typ1.FillWeight = 20.30457F;
+            this.Typ1.HeaderText = "";
+            this.Typ1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Typ1.MinimumWidth = 6;
+            this.Typ1.Name = "Typ1";
+            this.Typ1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.FillWeight = 126.5651F;
+            this.dataGridViewTextBoxColumn6.HeaderText = "Nazwa";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.FillWeight = 126.5651F;
+            this.dataGridViewTextBoxColumn8.HeaderText = "Data";
+            this.dataGridViewTextBoxColumn8.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.FillWeight = 126.5651F;
+            this.dataGridViewTextBoxColumn7.HeaderText = "Rozmiar";
+            this.dataGridViewTextBoxColumn7.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            // 
             // TotalComander
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -500,13 +503,13 @@ namespace ProjektPO
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Data;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.CheckBox chboxMove;
+        private System.Windows.Forms.CheckBox chboxOverwrite;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewImageColumn Typ1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.CheckBox chboxMove;
-        private System.Windows.Forms.CheckBox chboxOverwrite;
     }
 }
 

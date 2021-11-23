@@ -177,7 +177,7 @@ namespace ProjektPO
             // Get the index of the item the mouse is below.
             var hittestInfo = pc.Dgv.HitTest(e.X, e.Y);
 
-            if (hittestInfo.RowIndex != -1 && hittestInfo.ColumnIndex != -1)
+            if (hittestInfo.RowIndex != -1 && hittestInfo.ColumnIndex != -1 && hittestInfo.RowIndex != 0 && hittestInfo.ColumnIndex != 0)
             {
                 //valueFromMouseDown = dataGrid1.Rows[hittestInfo.RowIndex].Cells[hittestInfo.ColumnIndex].Value;
                 valueFromMouseDown = pc.Dgv.Rows[hittestInfo.RowIndex].Cells[0].Value;
