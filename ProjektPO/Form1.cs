@@ -1,4 +1,5 @@
 ﻿using ProjektPO.Class;
+using ProjektPO.Viev;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +13,7 @@ using System.Windows.Forms;
 
 namespace ProjektPO
 {
-    public partial class Form1 : Form
+    public partial class TotalComander : Form
     {
         private Rectangle dragBoxFromMouseDown;
         private object valueFromMouseDown;
@@ -20,11 +21,32 @@ namespace ProjektPO
         private PanelComander leftComander;
         private PanelComander rightComander;
 
-        public Form1()
+        gridView leftPanelGrid;
+        gridView rightPanelGrid;
+
+        public TotalComander()
         {
             try
             {
                 InitializeComponent();
+
+             //   leftPanelGrid = new gridView();
+             //   rightPanelGrid = new gridView();
+
+             //   panelLeft.Controls.Add(leftPanelGrid);
+             //   leftPanelGrid.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)
+             //| AnchorStyles.Left) | AnchorStyles.Right)));
+             //   leftPanelGrid.Dock = DockStyle.Fill;
+
+             //   panelRight.Controls.Add(rightPanelGrid);
+             //   rightPanelGrid.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)
+             //| AnchorStyles.Left) | AnchorStyles.Right)));
+             //   rightPanelGrid.Dock = DockStyle.Fill;
+
+             //   leftComander = new PanelComander(leftPanelGrid.dataGrid, tboxDirectoryLeft);
+             //   rightComander = new PanelComander(rightPanelGrid.dataGrid, tboxDirectoryRight);
+
+
                 leftComander = new PanelComander(dataGridLeft, tboxDirectoryLeft);
                 rightComander = new PanelComander(dataGridRight, tboxDirectoryRight);
             }
@@ -71,10 +93,17 @@ namespace ProjektPO
        
         private void Form1_Load(object sender, EventArgs e)
         {
-            leftComander.SourceDirectory = "C:\\";
-            rightComander.SourceDirectory = "C:\\";
-            leftComander.fillGrid();
-            rightComander.fillGrid();
+            try{
+                leftComander.SourceDirectory = "C:\\";
+                rightComander.SourceDirectory = "C:\\";
+                leftComander.fillGrid();
+                rightComander.fillGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void dataGridLeft_MouseDown(object sender, MouseEventArgs e)
@@ -199,7 +228,11 @@ namespace ProjektPO
                     var hittest = pc.Dgv.HitTest(clientPoint.X, clientPoint.Y);
                     if (!(pc is null))
                     {
-                        moveFile(cellvalue, pc.SourceDirectory);
+                        
+                        dropElement(cellvalue, pc.SourceDirectory);
+
+                        
+                        //moveFile(cellvalue, pc.SourceDirectory);
                     }
                     else
                     {
@@ -223,17 +256,137 @@ namespace ProjektPO
             }
         }
 
+        private void dropElement(string from, string to)
+        {
 
+            //using (WinFileExecute settingsForm = new WinFileExecute("Folder"))
+            //{
+            //    if (settingsForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //    {
+            //        x = settingsForm.Value;
+            //        if (x == "move")
+            //            moveDirectory(from, to);
+            //        if (x == "copy")
+            //            copyDirectory(from, to);
+            //    }
+            //}
+            try
+            {
 
-        private void moveFile(string file,string directory)
+                string x = string.Empty;
+                FileAttributes attr = File.GetAttributes(from);
+                if (attr.HasFlag(FileAttributes.Directory))
+                {
+                    //Przenoszony jest folder
+                    
+                    copyDirectory(from, to);
+                }
+                else
+                {
+                    //Przenoszony jest plik
+                    if (chboxMove.Checked)
+                        moveFile(from, to);
+                    else
+                        copyFile(from, to); 
+                   
+                }
+                
+            }catch(ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void copyFile(string from, string to)
         {
             try
             {
-                //Check if file and directory exist
-                if (!(File.Exists(file)) && !(Directory.Exists(directory)))
-                    throw new FileNotFoundException("Podane pliki nie istnieją!");
+                string destFile = to + "\\" + Path.GetFileName(from);
+                if (!chboxOverwrite.Checked)
+                {
+                    while (File.Exists(destFile))
+                    {
+                        destFile = to + "\\" + Path.GetFileNameWithoutExtension(destFile) + "-kopia" + Path.GetExtension(destFile);
+                    }
+                }
+                    
+                File.Copy(from, destFile,chboxOverwrite.Checked);
 
-                File.Move(file, directory +"\\"+ Path.GetFileName(file));
+            }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Błąd programu");
+            }
+        }
+
+        private void copyFile(string from, string to, bool overwrite )
+        {
+            try
+            {
+                string destFile = to + "\\" + Path.GetFileName(from);
+                if (!overwrite)
+                {
+                    while (File.Exists(destFile))
+                    {
+                        destFile = to + "\\" + Path.GetFileNameWithoutExtension(destFile) + "-kopia" + Path.GetExtension(destFile);
+                    }
+                }
+
+                File.Copy(from, destFile, overwrite);
+
+            }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Błąd programu");
+            }
+        }
+
+        private void copyDirectory(string from, string to)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void moveDirectory(string from, string to)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void moveFile(string from, string to)
+        {
+            try
+            {
+                string destFile = to + "\\" + Path.GetFileName(from);
+                if (File.Exists(destFile))
+                {
+                    string x = string.Empty;
+                    using (WinFileExecute settingsForm = new WinFileExecute("Plik"))
+                    {
+                        if (settingsForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            x = settingsForm.Value;
+                            if (x == "move")
+                            {
+                                copyFile(from, to, true);
+                                File.Delete(from);
+                            }     
+                            if (x == "copy")
+                                copyFile(from, to);
+                        }
+                    }
+                }
+                else
+                {
+                    File.Move(from, destFile);
+                }
+                
 
             }catch(FileNotFoundException ex)
             {
@@ -255,10 +408,38 @@ namespace ProjektPO
                     leftComander.fillGrid();
                 else
                 {
-                    if (leftComander.Dgv[3, e.RowIndex].Value is null)
+                    FileAttributes attr = File.GetAttributes(leftComander.Dgv[0, e.RowIndex].Value.ToString());
+                    if (attr.HasFlag(FileAttributes.Directory))
                     {
                         path = leftComander.Dgv[0, e.RowIndex].Value.ToString();
                         leftComander.go(path);
+                    }
+                }
+            }
+        }
+
+        private void dataGrid_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
+        {
+            if (e.RowIndex1 == 0)
+                e.Handled = true;
+            else
+                e.Handled = false;
+        }
+
+        private void dataGridRight_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex != -1 && e.ColumnIndex != -1)
+            {
+                string path;
+                if (rightComander.Dgv[0, e.RowIndex].Value is null)
+                    rightComander.fillGrid();
+                else
+                {
+                    FileAttributes attr = File.GetAttributes(rightComander.Dgv[0, e.RowIndex].Value.ToString());
+                    if (attr.HasFlag(FileAttributes.Directory))
+                    {
+                        path = rightComander.Dgv[0, e.RowIndex].Value.ToString();
+                        rightComander.go(path);
                     }
                 }
             }
