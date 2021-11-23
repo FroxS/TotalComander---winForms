@@ -25,9 +25,9 @@ namespace ProjektPO.Viev
             labCom.Text = com + " istnieje, przenieśc plik czy stworzyć nowy?";
         }
 
-        private void btnMove_Click(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
-            value= "move";
+            value= "delete";
             Close();
         }
 
@@ -36,8 +36,6 @@ namespace ProjektPO.Viev
             value ="copy";
             Close();
         }
-
-
 
     }
 }

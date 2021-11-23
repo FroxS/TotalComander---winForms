@@ -21,9 +21,6 @@ namespace ProjektPO
         private PanelComander leftComander;
         private PanelComander rightComander;
 
-        gridView leftPanelGrid;
-        gridView rightPanelGrid;
-
         public TotalComander()
         {
             try
@@ -226,22 +223,39 @@ namespace ProjektPO
                 if (!(valueFromMouseDown is null))
                 {
                     var hittest = pc.Dgv.HitTest(clientPoint.X, clientPoint.Y);
-                    if (!(pc is null))
+                    if (!(pc is null) && hittest.RowIndex != -1 && hittest.ColumnIndex != -1)
                     {
-                        
-                        dropElement(cellvalue, pc.SourceDirectory);
 
-                        
-                        //moveFile(cellvalue, pc.SourceDirectory);
-                    }
-                    else
-                    {
-                        if (hittest.ColumnIndex != -1 && hittest.RowIndex != -1)
+                        if (!pc.isTheSameSource(cellvalue))
                         {
-                            moveFile(cellvalue, Path.GetDirectoryName(pc.Dgv[0, hittest.RowIndex].Value.ToString()));
-                            //fillGrid(dataGridLeft);
+
+                            if (!isDirectory(cellvalue))
+                            {
+                                if (chboxMove.Checked)
+                                    pc.pasteFile(cellvalue, "move");
+                                else
+                                    pc.pasteFile(cellvalue, "copy", chboxOverwrite.Checked);
+                            }
+                            else
+                            {
+                                if (chboxMove.Checked)
+                                    pc.pasteDirectory(cellvalue, "move");
+                                else
+                                    pc.pasteDirectory(cellvalue, "copy");
+                            }
+
+                            //dropElement(cellvalue, pc.SourceDirectory);
                         }
+                            
                     }
+                    //else
+                    //{
+                    //    if (hittest.ColumnIndex != -1 && hittest.RowIndex != -1)
+                    //    {
+                    //        moveFile(cellvalue, Path.GetDirectoryName(pc.Dgv[0, hittest.RowIndex].Value.ToString()));
+                    //        //fillGrid(dataGridLeft);
+                    //    }
+                    //}
 
 
                 }
@@ -256,196 +270,13 @@ namespace ProjektPO
             }
         }
 
-        private void dropElement(string from, string to)
+        private bool isDirectory(string file)
         {
-
-            //using (WinFileExecute settingsForm = new WinFileExecute("Folder"))
-            //{
-            //    if (settingsForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //    {
-            //        x = settingsForm.Value;
-            //        if (x == "move")
-            //            moveDirectory(from, to);
-            //        if (x == "copy")
-            //            copyDirectory(from, to);
-            //    }
-            //}
-            try
-            {
-                FileAttributes attr = File.GetAttributes(from);
-                if (attr.HasFlag(FileAttributes.Directory))
-                {
-                    bool contents = true;
-                    using (WinFolderExecute settingsForm = new WinFolderExecute())
-                    {
-                        if (settingsForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        {
-                            contents = settingsForm.Value;
-                            if (settingsForm.Value);
-                        }
-                    }
-
-
-
-
-                    //Przenoszony jest folder
-                    if (chboxMove.Checked)
-                        moveDirectory(from, to, contents);
-                    else
-                        copyDirectory(from, to, contents);
-                }
-                else
-                {
-                    //Przenoszony jest plik
-                    if (chboxMove.Checked)
-                        moveFile(from, to);
-                    else
-                        copyFile(from, to); 
-                   
-                }
-                
-            }catch(ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void copyFile(string from, string to)
-        {
-            try
-            {
-                string destFile = to + "\\" + Path.GetFileName(from);
-                if (!chboxOverwrite.Checked)
-                {
-                    while (File.Exists(destFile))
-                    {
-                        destFile = to + "\\" + Path.GetFileNameWithoutExtension(destFile) + "-kopia" + Path.GetExtension(destFile);
-                    }
-                }
-                    
-                File.Copy(from, destFile,chboxOverwrite.Checked);
-
-            }
-            catch (FileNotFoundException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Błąd programu");
-            }
-        }
-
-        private void copyFile(string from, string to, bool overwrite )
-        {
-            try
-            {
-                string destFile = to + "\\" + Path.GetFileName(from);
-                if (!overwrite)
-                {
-                    while (File.Exists(destFile))
-                    {
-                        destFile = to + "\\" + Path.GetFileNameWithoutExtension(destFile) + "-kopia" + Path.GetExtension(destFile);
-                    }
-                }
-
-                File.Copy(from, destFile, overwrite);
-
-            }
-            catch (FileNotFoundException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Błąd programu");
-            }
-        }
-
-        private void copyDirectory(string from, string to, bool contents)
-        {
-            try
-            {
-                string destfolder = to + "\\" + Path.GetFileName(from);
-                if (!chboxOverwrite.Checked)
-                {
-                    while (Directory.Exists(destfolder))
-                    {
-                        destfolder = to + "\\" + Path.GetFileName(destfolder) + "-kopia";
-                    }
-                }
-
-
-                // TWORZY MI DWA DOLDERY W DÓWCH MIEJSCAH - SPRAWDZIĆ
-                Directory.CreateDirectory(destfolder);
-
-
-                if (contents)
-                {
-                    DirectoryInfo deep = new DirectoryInfo(from);
-
-                    DirectoryInfo[] directories = deep.GetDirectories(".", System.IO.SearchOption.AllDirectories);
-                    foreach(DirectoryInfo di in directories)
-                    {
-                        MessageBox.Show(di.Name);
-                    }
-
-                }
-
-            }
-            catch (FileNotFoundException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Błąd programu");
-            }
-        }
-
-        private void moveDirectory(string from, string to, bool contents)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void moveFile(string from, string to)
-        {
-            try
-            {
-                string destFile = to + "\\" + Path.GetFileName(from);
-                if (File.Exists(destFile))
-                {
-                    string x = string.Empty;
-                    using (WinFileExecute settingsForm = new WinFileExecute("Plik"))
-                    {
-                        if (settingsForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        {
-                            x = settingsForm.Value;
-                            if (x == "move")
-                            {
-                                copyFile(from, to, true);
-                                File.Delete(from);
-                            }     
-                            if (x == "copy")
-                                copyFile(from, to);
-                        }
-                    }
-                }
-                else
-                {
-                    File.Move(from, destFile);
-                }
-                
-
-            }catch(FileNotFoundException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch(Exception)
-            {
-                MessageBox.Show("Błąd programu");
-            }
-            
+            FileAttributes attr = File.GetAttributes(file);
+            if (attr.HasFlag(FileAttributes.Directory))
+                return true;
+            else
+                return false;
         }
 
         private void dataGridLeft_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -490,6 +321,54 @@ namespace ProjektPO
                         path = rightComander.Dgv[0, e.RowIndex].Value.ToString();
                         rightComander.go(path);
                     }
+                }
+            }
+        }
+
+        private void dataGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Delete || e.KeyCode == Keys.F8)
+            {
+                PanelComander pc = null;
+                DataGridView dgv = sender as DataGridView;
+                if(leftComander.Dgv == dgv)
+                    pc = leftComander;
+                if(rightComander.Dgv == dgv)
+                    pc = rightComander;
+
+                if(!(pc is null))
+                {
+                    foreach(DataGridViewRow file in dgv.SelectedRows)
+                    {
+                        if (isDirectory(file.Cells[0].Value.ToString()))
+                            pc.deleteDirectory(file.Cells[0].Value.ToString());
+                        else
+                            pc.deleteFile(file.Cells[0].Value.ToString());
+                    }
+                    pc.fillGrid();
+                }
+            }
+
+            if(e.KeyCode == Keys.F7)
+            {
+                PanelComander pc = null;
+                DataGridView dgv = sender as DataGridView;
+                if (leftComander.Dgv == dgv)
+                    pc = leftComander;
+                if (rightComander.Dgv == dgv)
+                    pc = rightComander;
+
+                if (!(pc is null)) 
+                {
+                    using (WinGetName settingsForm = new WinGetName())
+                    {
+                        if (settingsForm.ShowDialog() == System.Windows.Forms.DialogResult.OK) 
+                        {
+                            pc.createDirectory(settingsForm.Value);
+                            pc.fillGrid();
+                        } 
+                    }
+                            
                 }
             }
         }

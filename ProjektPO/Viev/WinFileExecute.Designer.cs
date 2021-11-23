@@ -29,27 +29,27 @@ namespace ProjektPO.Viev
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnMove = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.btnCoppy = new System.Windows.Forms.Button();
             this.labCom = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // btnMove
+            // btnDelete
             // 
-            this.btnMove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
-            this.btnMove.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnMove.FlatAppearance.BorderSize = 0;
-            this.btnMove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMove.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnMove.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnMove.Location = new System.Drawing.Point(60, 95);
-            this.btnMove.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnMove.Name = "btnMove";
-            this.btnMove.Size = new System.Drawing.Size(135, 50);
-            this.btnMove.TabIndex = 0;
-            this.btnMove.Text = "Przenieś";
-            this.btnMove.UseVisualStyleBackColor = false;
-            this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
+            this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
+            this.btnDelete.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnDelete.FlatAppearance.BorderSize = 0;
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnDelete.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnDelete.Location = new System.Drawing.Point(60, 95);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(135, 50);
+            this.btnDelete.TabIndex = 0;
+            this.btnDelete.Text = "Usuń";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnCoppy
             // 
@@ -75,21 +75,21 @@ namespace ProjektPO.Viev
             this.labCom.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.labCom.Location = new System.Drawing.Point(56, 29);
             this.labCom.Name = "labCom";
-            this.labCom.Size = new System.Drawing.Size(94, 21);
+            this.labCom.Size = new System.Drawing.Size(115, 28);
             this.labCom.TabIndex = 3;
             this.labCom.Text = "Komunikat";
             // 
             // WinFileExecute
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(584, 181);
+            this.ClientSize = new System.Drawing.Size(582, 173);
             this.Controls.Add(this.labCom);
             this.Controls.Add(this.btnCoppy);
-            this.Controls.Add(this.btnMove);
+            this.Controls.Add(this.btnDelete);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximumSize = new System.Drawing.Size(600, 220);
             this.MinimumSize = new System.Drawing.Size(600, 220);
             this.Name = "WinFileExecute";
@@ -102,7 +102,7 @@ namespace ProjektPO.Viev
 
         #endregion
 
-        private System.Windows.Forms.Button btnMove;
+        private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnCoppy;
         private System.Windows.Forms.Label labCom;
     }
