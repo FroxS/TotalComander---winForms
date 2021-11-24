@@ -79,11 +79,11 @@ namespace ProjektPO.Viev
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
             this.dataGrid.EnableHeadersVisualStyles = false;
             this.dataGrid.Location = new System.Drawing.Point(0, 0);
             this.dataGrid.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dataGrid.Name = "dataGrid";
-            this.dataGrid.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -100,9 +100,12 @@ namespace ProjektPO.Viev
             this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGrid.Size = new System.Drawing.Size(869, 636);
             this.dataGrid.TabIndex = 13;
+            this.dataGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellDoubleClick);
+            this.dataGrid.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.dataGrid_SortCompare);
             this.dataGrid.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGrid_DragDrop);
             this.dataGrid.DragEnter += new System.Windows.Forms.DragEventHandler(this.dataGrid_DragEnter);
             this.dataGrid.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGrid_DragOver);
+            this.dataGrid.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGrid_KeyDown);
             this.dataGrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGrid_MouseDown);
             this.dataGrid.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGrid_MouseMove);
             // 
@@ -111,7 +114,6 @@ namespace ProjektPO.Viev
             this.dataGridViewTextBoxColumn1.HeaderText = "path";
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
             this.dataGridViewTextBoxColumn1.Visible = false;
             // 
             // Typ
@@ -121,7 +123,6 @@ namespace ProjektPO.Viev
             this.Typ.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
             this.Typ.MinimumWidth = 6;
             this.Typ.Name = "Typ";
-            this.Typ.ReadOnly = true;
             this.Typ.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Typ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
@@ -139,7 +140,6 @@ namespace ProjektPO.Viev
             this.Data.HeaderText = "Data";
             this.Data.MinimumWidth = 6;
             this.Data.Name = "Data";
-            this.Data.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -147,7 +147,6 @@ namespace ProjektPO.Viev
             this.dataGridViewTextBoxColumn3.HeaderText = "Rozmiar";
             this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
             // gridView
             // 
@@ -162,8 +161,7 @@ namespace ProjektPO.Viev
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dataGrid;
+        public System.Windows.Forms.DataGridView dataGrid;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewImageColumn Typ;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
