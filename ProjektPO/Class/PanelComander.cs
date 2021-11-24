@@ -16,23 +16,26 @@ namespace ProjektPO.Class
     {
         private DataGridView dgv;
         private string sourceDirectory;
-        private TextBox textbox;
+        private List<PanelItem> item = new List<PanelItem>();
+        private bool goBack = false;
 
-        public PanelComander(DataGridView dgv, TextBox textbox)
+
+        public PanelComander(DataGridView dgv)
         {
             this.dgv = dgv ?? throw new ArgumentNullException(nameof(dgv));
-            this.textbox = textbox ?? throw new ArgumentNullException(nameof(textbox));
+            fillItem();
         }
 
-        public PanelComander(DataGridView dgv, TextBox textbox, string sourceDirectory)
+        public PanelComander(DataGridView dgv, string sourceDirectory)
         {
             this.dgv = dgv ?? throw new ArgumentNullException(nameof(dgv));
-            this.textbox = textbox ?? throw new ArgumentNullException(nameof(textbox));
 
             if(string.IsNullOrEmpty(sourceDirectory) || !Directory.Exists(sourceDirectory))
                 throw new ArgumentNullException(nameof(sourceDirectory));
             else
                 this.sourceDirectory = sourceDirectory;
+
+            fillItem();
         }
 
         public DataGridView Dgv { get => dgv; set => dgv = value; }
@@ -45,21 +48,36 @@ namespace ProjektPO.Class
                 if (string.IsNullOrEmpty(value) || !Directory.Exists(value.ToString())) throw new ArgumentException("Ścieżka katalaogu jest pusta albo nie istnieje");
                 //if (string.IsNullOrEmpty(value)) throw new ArgumentException("Ścieżka katalaogu jest pusta albo nie istnieje");
                 this.sourceDirectory = value;
-                this.textbox.Text = value;
             }
         }
-        public TextBox Textbox { get => textbox; set => textbox = value; }
+        public bool GoBack { get => goBack; set => goBack = value; }
 
-        private string[] getFiles()
+        private void fillItem(string search = "")
         {
             if (string.IsNullOrEmpty(SourceDirectory)) throw new ArgumentException("Katalog panelu nie został utworozny");
-            return Directory.GetFiles(SourceDirectory, "*");
-        }
 
-        private string[] getDirectory()
-        {
-            if (string.IsNullOrEmpty(SourceDirectory)) throw new ArgumentException("Katalog panelu nie został utworozny");
-            return Directory.GetDirectories(SourceDirectory);
+            item = item is null ? item = new List<PanelItem>():item;
+
+            ItemDir root = new ItemDir(System.IO.Path.GetDirectoryName(sourceDirectory));
+            root.Name = "...";
+            item.Add(root);
+
+            if (!string.IsNullOrEmpty(search))
+                search = "*" + search + "*";
+            else
+                search = "*";
+
+            foreach (DirectoryInfo directory in new DirectoryInfo(sourceDirectory).GetDirectories(search))
+            {
+
+                item.Add(new ItemDir(directory.FullName));
+                
+            }
+            foreach (FileInfo files in new DirectoryInfo(sourceDirectory).GetFiles(search))
+            {
+                item.Add(new ItemFile(files.FullName));
+            }
+            dgv.ClearSelection();
         }
 
         private string getCoppyFile(string destfile)
@@ -71,7 +89,6 @@ namespace ProjektPO.Class
             return destfile;
         }
 
-
         private string getCoppyDirectory(string destfolder)
         {
             while (Directory.Exists(destfolder))
@@ -79,64 +96,53 @@ namespace ProjektPO.Class
             return destfolder;
         }
 
-        private string getLengthFile(Int64 bytes)
+
+        public void fillGrid(bool refresh = false)
         {
-            string[] suffixes = { "Bytes", "KB", "MB", "GB", "TB", "PB" };
-
-            int counter = 0;
-            decimal number = (decimal)bytes;
-            while (Math.Round(number / 1024) >= 1)
-            {
-                number = number / 1024;
-                counter++;
-            }
-            return string.Format("{0:n1}{1}", number, suffixes[counter]);
-            
-        }
-
-        public void fillGrid()
-        {
-
             if (string.IsNullOrEmpty(SourceDirectory)) throw new ArgumentException("Katalog panelu nie został utworozny");
             dgv.Rows.Clear();
-            DataTable table = new DataTable();
-            table.Columns.Add("name");
-            table.Columns.Add("typ");
-            table.Columns.Add("size");
 
-            dgv.Rows.Add(Path.GetDirectoryName(sourceDirectory), null, "...");
-            foreach (var di in this.getDirectory())
+            if (!(item[0].Path == SourceDirectory)|| goBack || refresh) 
             {
-                DirectoryInfo directory = new DirectoryInfo(di);
-                DateTime dt = Directory.GetCreationTime(di);
-                Icon fileIco = DefaultIcons.FolderLarge;
-                dgv.Rows.Add(new object[] {
-                    di,
-                    fileIco,
-                    directory.Name,
-                    dt.ToString("dd'-'MM'-'yyyy")
-                });
-                Cursor.Current = Cursors.WaitCursor;
-            }
-
-            foreach (var fi in this.getFiles())
+                goBack = false;
+                item = null;
+                fillItem();
+            } 
+            foreach (PanelItem pi in item)
             {
-                FileInfo file = new FileInfo(fi);
-                DateTime dt = File.GetCreationTime(fi);
-                Icon fileIco = SystemIcons.WinLogo;
-                fileIco = Icon.ExtractAssociatedIcon(file.FullName);
                 dgv.Rows.Add(new object[] {
-                    fi,
-                    Icon.ExtractAssociatedIcon(file.FullName),
-                    file.Name,
-                    dt.ToString("dd'-'MM'-'yyyy"),
-                    getLengthFile(file.Length)
-                }) ;
+                    pi.Path,
+                    pi.Ico,
+                    pi.Name,
+                    pi.Created.ToString("dd'-'MM'-'yyyy"),
+                    (pi as ItemFile) is null ? null :(pi as ItemFile).getLength()
+                }); ; ;
                 Cursor.Current = Cursors.WaitCursor;
             }
             Cursor.Current = Cursors.Default;
         }
 
+        public void fillGrid(string search)
+        {
+            if (string.IsNullOrEmpty(SourceDirectory)) throw new ArgumentException("Katalog panelu nie został utworozny");
+            dgv.Rows.Clear();
+
+            item = null;
+            fillItem(search);
+
+            foreach (PanelItem pi in item)
+            {
+                dgv.Rows.Add(new object[] {
+                    pi.Path,
+                    pi.Ico,
+                    pi.Name,
+                    pi.Created.ToString("dd'-'MM'-'yyyy"),
+                    (pi as ItemFile) is null ? null :(pi as ItemFile).getLength()
+                }); ; ;
+                Cursor.Current = Cursors.WaitCursor;
+            }
+            Cursor.Current = Cursors.Default;
+        }
 
         public void go(string source)
         {
@@ -168,7 +174,20 @@ namespace ProjektPO.Class
                 return false;
         }
 
+        public PanelItem getItem(string path)
+        {
+            foreach (PanelItem pi in item)
+            {
+                if (pi.Path == path)
+                    return pi;
+            }
+            return null;
+        }
 
+        public void pasteItem(PanelItem item,string source)
+        {
+            item.move(source);
+        }
 
         public void pasteFile(string file,string action, bool overwrite = true)
         {
@@ -212,12 +231,11 @@ namespace ProjektPO.Class
             {
                 MessageBox.Show(ex.Message);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show("Błąd programu");
             }
         }
-
 
         public void pasteDirectory(string file, string action)
         {
@@ -293,8 +311,6 @@ namespace ProjektPO.Class
             }
         }
 
-
-
         public void deleteFile(string file)
         {
             if (File.Exists(file))
@@ -316,34 +332,6 @@ namespace ProjektPO.Class
             }
             Directory.CreateDirectory(newDir);
             
-        }
-
-        
-
-        public void copyFile(string from, string to, bool overwrite)
-        {
-            try
-            {
-                string destFile = to + "\\" + Path.GetFileName(from);
-                if (!overwrite)
-                {
-                    while (File.Exists(destFile))
-                    {
-                        destFile = to + "\\" + Path.GetFileNameWithoutExtension(destFile) + "-kopia" + Path.GetExtension(destFile);
-                    }
-                }
-
-                File.Copy(from, destFile, overwrite);
-
-            }
-            catch (FileNotFoundException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Błąd programu");
-            }
-        }
+        }       
     }
 }

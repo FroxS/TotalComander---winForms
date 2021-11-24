@@ -47,7 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\DefaultIcons.cs" />
+    <Compile Include="Class\ItemDir.cs" />
+    <Compile Include="Class\ItemFile.cs" />
     <Compile Include="Class\PanelComander.cs" />
+    <Compile Include="Class\PanelItem.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +64,12 @@
     </Compile>
     <Compile Include="Viev\gridView.Designer.cs">
       <DependentUpon>gridView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viev\DialogYesNo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Viev\DialogYesNo.Designer.cs">
+      <DependentUpon>DialogYesNo.cs</DependentUpon>
     </Compile>
     <Compile Include="Viev\WinGetName.cs">
       <SubType>Form</SubType>
@@ -94,6 +103,9 @@
     </Compile>
     <EmbeddedResource Include="Viev\gridView.resx">
       <DependentUpon>gridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viev\DialogYesNo.resx">
+      <DependentUpon>DialogYesNo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Viev\WinGetName.resx">
       <DependentUpon>WinGetName.cs</DependentUpon>

@@ -18,17 +18,61 @@ namespace ProjektPO.Viev
         private static Rectangle dragBoxFromMouseDown;
         private static object valueFromMouseDown;
         private PanelComander pc;
-        private TextBox tb;
+        //private TextBox tb;
+        private Label lab;
+        private ComboBox cmb;
+        private TextBox search;
 
         internal PanelComander Pc { get => pc; set => pc = value; }
 
-        public gridView(ref TextBox tb)
+        public gridView(ref object[] data)
         {         
             InitializeComponent();
-            this.tb = tb;
-            pc = new PanelComander(this.dataGrid, tb, "C:\\");
+            //tb = data[0] as TextBox;
+            lab = data[0] as Label;
+            cmb = data[1] as ComboBox;
+            search = data[2] as TextBox;
+            pc = new PanelComander(this.dataGrid, cmb.Text);
+            lab.Text = pc.SourceDirectory;
             pc.fillGrid();
-        }     
+            
+            this.cmb.SelectedIndexChanged += new EventHandler(this.changeDrive);
+            this.search.TextChanged += new EventHandler(this.searchFiles);
+            this.search.KeyDown += new KeyEventHandler(this.searchFilesDel);
+        }   
+        
+        private void changeDrive(object sendler, EventArgs e)
+        {
+            if (Directory.Exists(cmb.Text))
+            {
+                pc.SourceDirectory = cmb.Text;
+                pc.fillGrid(true);
+                lab.Text = pc.SourceDirectory;
+            }
+            
+        }
+
+        private void searchFiles(object sendler, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(search.Text))
+            {
+                pc.fillGrid(search.Text);
+            }
+
+        }
+
+        private void searchFilesDel(object sendler, KeyEventArgs e)
+        {
+            if ((e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete) && search.Text.Length == 1)
+            {
+                if (!string.IsNullOrEmpty(search.Text))
+                {
+                    pc.fillGrid("*");
+                }
+            }
+            
+
+        }
 
 
         //Grid from drop
@@ -173,10 +217,12 @@ namespace ProjektPO.Viev
                 {
                     if(isDirectory(pc.Dgv[0, e.RowIndex].Value.ToString()))
                     {
+                        if (e.RowIndex == 0) pc.GoBack = true;
                         path = pc.Dgv[0, e.RowIndex].Value.ToString();
                         pc.go(path);
                     }
                 }
+                lab.Text = pc.SourceDirectory;
             }
         }
 
@@ -188,7 +234,6 @@ namespace ProjektPO.Viev
             else
                 e.Handled = false;
         }
-
 
         //Grid function delete,create
         private void dataGrid_KeyDown(object sender, KeyEventArgs e)
@@ -222,6 +267,17 @@ namespace ProjektPO.Viev
                     }
 
                 }
+            }
+        }
+
+        private void dataGrid_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button.ToString() == "Left")
+            {
+                if(this == ((TotalComander)GetParentForm(this)).LeftPanelGrid)
+                    ((TotalComander)GetParentForm(this)).RightPanelGrid.dataGrid.ClearSelection();
+                else
+                    ((TotalComander)GetParentForm(this)).LeftPanelGrid.dataGrid.ClearSelection();
             }
         }
     }

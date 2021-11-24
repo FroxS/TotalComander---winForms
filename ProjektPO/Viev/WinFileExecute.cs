@@ -14,8 +14,6 @@ namespace ProjektPO.Viev
     {
         private string value;
 
-        string comunicat;
-
         public string Value { get => value; set => this.value = value; }
 
         public WinFileExecute(string com)
