@@ -10,32 +10,28 @@ using System.Windows.Forms;
 
 namespace ProjektPO.Viev
 {
-    public partial class WinFolderExecute : Form
+    public partial class DialogYesNo : Form
     {
         private bool value;
 
         public bool Value { get => value; set => this.value = value; }
 
-        public WinFolderExecute()
+        public DialogYesNo(string text)
         {
             InitializeComponent();
-
-            labCom.Text = "Kopiować folder z zawartością";
+            labText.Text = text;
         }
 
-        private void btnMove_Click(object sender, EventArgs e)
+        private void btnYes_Click(object sender, EventArgs e)
         {
-            value= true;
+            value = true;
             Close();
         }
 
-        private void btnCoppy_Click(object sender, EventArgs e)
+        private void btnNo_Click(object sender, EventArgs e)
         {
-            value =false;
+            value = false;
             Close();
         }
-
-
-
     }
 }
