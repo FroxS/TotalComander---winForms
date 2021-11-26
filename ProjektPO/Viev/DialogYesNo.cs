@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjektPO.Class;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,7 +21,11 @@ namespace ProjektPO.Viev
         {
             InitializeComponent();
             labText.Text = text;
+            labText.AutoSize = true;
+            labText.MaximumSize = new Size(400, 0);
+            
         }
+
 
         private void btnYes_Click(object sender, EventArgs e)
         {
@@ -33,5 +38,6 @@ namespace ProjektPO.Viev
             value = false;
             Close();
         }
+
     }
 }

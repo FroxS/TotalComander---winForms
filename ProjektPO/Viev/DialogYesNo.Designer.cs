@@ -42,7 +42,7 @@ namespace ProjektPO.Viev
             this.btnYes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnYes.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnYes.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnYes.Location = new System.Drawing.Point(59, 99);
+            this.btnYes.Location = new System.Drawing.Point(84, 156);
             this.btnYes.Margin = new System.Windows.Forms.Padding(4);
             this.btnYes.Name = "btnYes";
             this.btnYes.Size = new System.Drawing.Size(135, 50);
@@ -56,9 +56,9 @@ namespace ProjektPO.Viev
             this.labText.AutoSize = true;
             this.labText.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.labText.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.labText.Location = new System.Drawing.Point(55, 31);
+            this.labText.Location = new System.Drawing.Point(54, 21);
             this.labText.Name = "labText";
-            this.labText.Size = new System.Drawing.Size(170, 21);
+            this.labText.Size = new System.Drawing.Size(211, 28);
             this.labText.TabIndex = 4;
             this.labText.Text = "Text do wyświetlania";
             // 
@@ -70,7 +70,7 @@ namespace ProjektPO.Viev
             this.btnNo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNo.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnNo.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnNo.Location = new System.Drawing.Point(338, 99);
+            this.btnNo.Location = new System.Drawing.Point(363, 156);
             this.btnNo.Margin = new System.Windows.Forms.Padding(4);
             this.btnNo.Name = "btnNo";
             this.btnNo.Size = new System.Drawing.Size(135, 50);
@@ -81,16 +81,15 @@ namespace ProjektPO.Viev
             // 
             // DialogYesNo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(584, 181);
-            this.Controls.Add(this.btnNo);
+            this.ClientSize = new System.Drawing.Size(582, 251);
             this.Controls.Add(this.labText);
+            this.Controls.Add(this.btnNo);
             this.Controls.Add(this.btnYes);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximumSize = new System.Drawing.Size(600, 220);
             this.MinimumSize = new System.Drawing.Size(600, 220);
             this.Name = "DialogYesNo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

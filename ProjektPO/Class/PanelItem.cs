@@ -12,12 +12,12 @@ namespace ProjektPO.Class
     {
         protected string name;
         protected string path;
-        protected DateTime created;
+        protected DateTime? created;
         protected Icon ico;
 
         public string Name { get => name; set => name = value; }
         public string Path { get => path; set => path = value; }
-        public DateTime Created { get => created; set => created = value; }
+        public DateTime? Created { get => created; set => created = value; }
         public Icon Ico { get => ico; set => ico = value; }
 
         protected PanelItem(string path)

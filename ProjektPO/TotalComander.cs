@@ -41,12 +41,9 @@ namespace ProjektPO
                     cmbRightDrive,
                     tboxSearchRight
                 };
-                    
+
                 leftPanelGrid = new gridView(ref toPanelLeft);
                 rightPanelGrid = new gridView(ref toPanelRight);
-
-                //leftPanelGrid = new gridView(ref tboxDirectoryLeft,ref labelLeftSource);
-                //rightPanelGrid = new gridView(ref tboxDirectoryRight, ref labelRightSource);
 
                 panelLeftGrid.Controls.Add(leftPanelGrid);
                 leftPanelGrid.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)
@@ -58,8 +55,8 @@ namespace ProjektPO
              | AnchorStyles.Left) | AnchorStyles.Right)));
                 rightPanelGrid.Dock = DockStyle.Fill;
 
-                
 
+                labDescription.Text = "F7 -> tworzy nowy plik, F8,Del -> Usuwa zaznaczyony plik";
             }
             catch (Exception ex)
             {
@@ -108,31 +105,32 @@ namespace ProjektPO
             rightPanelGrid.Pc.fillGrid();
         }
 
+
+        //Przenoszenie zaznaczonych plików
         private void btnMoveOne_Click(object sender, EventArgs e)
         {
-            if (leftPanelGrid.Pc.Dgv.SelectedRows.Count > 0)
+            moveFiles();
+        }
+
+
+        private bool YesOrNot(string text = "")
+        {
+            using (DialogYesNo settingsForm = new DialogYesNo(text))
             {
-                //Z lewego do prawego
-                string path = leftPanelGrid.Pc.Dgv.SelectedRows[0].Cells[0].Value.ToString();
-                PanelItem item = leftPanelGrid.Pc.getItem(path);
-
-
-                leftPanelGrid.Pc.pasteItem(item, rightPanelGrid.Pc.SourceDirectory);
-                refreshAllGrids();
-
-            }
-            else //(rightPanelGrid.Pc.Dgv.SelectedRows.Count > 0)
-            {
-                //Z prawego do lewego
-                string path = rightPanelGrid.Pc.Dgv.SelectedRows[0].Cells[0].Value.ToString();
-                PanelItem item = rightPanelGrid.Pc.getItem(path);
-
-
-                rightPanelGrid.Pc.pasteItem(item, leftPanelGrid.Pc.SourceDirectory);
-                refreshAllGrids();
+                if (settingsForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    if (settingsForm.Value)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
             }
         }
 
+
+        //Wyczyszenie zaznaczenia elementów
         private void TotalComander_MouseDown(object sender, MouseEventArgs e)
         {
             var left = leftPanelGrid.Pc.Dgv.HitTest(e.X, e.Y);
@@ -151,6 +149,42 @@ namespace ProjektPO
                 rightPanelGrid.Pc.Dgv.ClearSelection();
             }
             //leftPanelGrid.Pc.Dgv[left.RowIndex,left.ColumnIndex].Selected
+        }
+
+
+
+        private void moveFiles()
+        {
+
+            if (leftPanelGrid.Pc.Dgv.SelectedRows.Count > 0)
+            {
+                //Z lewego do prawego
+                string[] path = leftPanelGrid.Pc.Dgv.SelectedRows.Cast<DataGridViewRow>().Select(x => x.Cells[0].Value.ToString().Trim()).ToArray();
+                        
+                List<PanelItem> items = leftPanelGrid.Pc.getItems(path);
+                if (YesOrNot("Czy jesteś pewien że chcesz przenieść plik do folderu " + Path.GetFileName(rightPanelGrid.Pc.SourceDirectory + "?")))
+                {
+                    foreach (PanelItem item in items)
+                        leftPanelGrid.Pc.pasteItem(item, rightPanelGrid.Pc.SourceDirectory);
+                    refreshAllGrids();
+                }
+
+            }
+            else //(rightPanelGrid.Pc.Dgv.SelectedRows.Count > 0)
+            {
+                //Z prawego do lewego
+
+                string[] path = rightPanelGrid.Pc.Dgv.SelectedRows.Cast<DataGridViewRow>().Select(x => x.Cells[0].Value.ToString().Trim()).ToArray();
+
+                List<PanelItem> items = rightPanelGrid.Pc.getItems(path);
+                if (YesOrNot("Czy jesteś pewien że chcesz przenieść pliki do folderu " + Path.GetFileName(leftPanelGrid.Pc.SourceDirectory + "?")))
+                {
+                    foreach (PanelItem item in items)
+                        rightPanelGrid.Pc.pasteItem(item, leftPanelGrid.Pc.SourceDirectory);
+                    refreshAllGrids();
+                }
+
+            }
         }
     }
 }

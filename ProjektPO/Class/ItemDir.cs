@@ -14,6 +14,11 @@ namespace ProjektPO.Class
         public ItemDir(string path): base(path)
         {
             this.ico = DefaultIcons.FolderLarge;
+
+            if (!(string.IsNullOrEmpty(path)))
+                this.created = Directory.GetCreationTime(path);
+            else
+                this.created = null;
         }
 
         public override void copy(string name, bool overwrite)
