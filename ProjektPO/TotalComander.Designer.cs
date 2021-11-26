@@ -39,7 +39,6 @@ namespace ProjektPO
             this.chboxOverwrite = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnMoveAll = new System.Windows.Forms.Button();
             this.btnMoveOne = new System.Windows.Forms.Button();
             this.panelRightGrid = new System.Windows.Forms.Panel();
             this.panelLeftGrid = new System.Windows.Forms.Panel();
@@ -49,6 +48,7 @@ namespace ProjektPO
             this.panel1 = new System.Windows.Forms.Panel();
             this.cmbLeftDrive = new System.Windows.Forms.ComboBox();
             this.tboxSearchLeft = new System.Windows.Forms.TextBox();
+            this.labDescription = new System.Windows.Forms.Label();
             this.panelBottom.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -124,6 +124,7 @@ namespace ProjektPO
             // 
             // panelTop
             // 
+            this.panelTop.Controls.Add(this.labDescription);
             this.panelTop.Controls.Add(this.chboxMove);
             this.panelTop.Controls.Add(this.chboxOverwrite);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
@@ -137,7 +138,7 @@ namespace ProjektPO
             this.chboxMove.AutoSize = true;
             this.chboxMove.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chboxMove.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.chboxMove.Location = new System.Drawing.Point(24, 40);
+            this.chboxMove.Location = new System.Drawing.Point(24, 54);
             this.chboxMove.Name = "chboxMove";
             this.chboxMove.Size = new System.Drawing.Size(75, 21);
             this.chboxMove.TabIndex = 1;
@@ -149,7 +150,7 @@ namespace ProjektPO
             this.chboxOverwrite.AutoSize = true;
             this.chboxOverwrite.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chboxOverwrite.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.chboxOverwrite.Location = new System.Drawing.Point(24, 13);
+            this.chboxOverwrite.Location = new System.Drawing.Point(24, 27);
             this.chboxOverwrite.Name = "chboxOverwrite";
             this.chboxOverwrite.Size = new System.Drawing.Size(80, 21);
             this.chboxOverwrite.TabIndex = 0;
@@ -178,29 +179,12 @@ namespace ProjektPO
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.btnMoveAll);
             this.panel3.Controls.Add(this.btnMoveOne);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(595, 53);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(54, 555);
             this.panel3.TabIndex = 2;
-            // 
-            // btnMoveAll
-            // 
-            this.btnMoveAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
-            this.btnMoveAll.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMoveAll.FlatAppearance.BorderSize = 0;
-            this.btnMoveAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMoveAll.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnMoveAll.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnMoveAll.Location = new System.Drawing.Point(2, 243);
-            this.btnMoveAll.Margin = new System.Windows.Forms.Padding(0);
-            this.btnMoveAll.Name = "btnMoveAll";
-            this.btnMoveAll.Size = new System.Drawing.Size(48, 28);
-            this.btnMoveAll.TabIndex = 5;
-            this.btnMoveAll.Text = "<<>>";
-            this.btnMoveAll.UseVisualStyleBackColor = false;
             // 
             // btnMoveOne
             // 
@@ -311,6 +295,16 @@ namespace ProjektPO
             this.tboxSearchLeft.Size = new System.Drawing.Size(362, 26);
             this.tboxSearchLeft.TabIndex = 2;
             // 
+            // labDescription
+            // 
+            this.labDescription.AutoSize = true;
+            this.labDescription.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.labDescription.Location = new System.Drawing.Point(21, 7);
+            this.labDescription.Name = "labDescription";
+            this.labDescription.Size = new System.Drawing.Size(75, 17);
+            this.labDescription.TabIndex = 2;
+            this.labDescription.Text = "Opis funkcji";
+            // 
             // TotalComander
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -360,8 +354,8 @@ namespace ProjektPO
         private System.Windows.Forms.TextBox tboxSearchRight;
         private System.Windows.Forms.TextBox tboxSearchLeft;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button btnMoveAll;
         private System.Windows.Forms.Button btnMoveOne;
+        private System.Windows.Forms.Label labDescription;
     }
 }
 

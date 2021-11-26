@@ -6,6 +6,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -114,7 +116,7 @@ namespace ProjektPO.Class
                     pi.Path,
                     pi.Ico,
                     pi.Name,
-                    pi.Created.ToString("dd'-'MM'-'yyyy"),
+                    pi.Created?.ToString("dd'-'MM'-'yyyy"),
                     (pi as ItemFile) is null ? null :(pi as ItemFile).getLength()
                 }); ; ;
                 Cursor.Current = Cursors.WaitCursor;
@@ -136,7 +138,7 @@ namespace ProjektPO.Class
                     pi.Path,
                     pi.Ico,
                     pi.Name,
-                    pi.Created.ToString("dd'-'MM'-'yyyy"),
+                    pi.Created?.ToString("dd'-'MM'-'yyyy"),
                     (pi as ItemFile) is null ? null :(pi as ItemFile).getLength()
                 }); ; ;
                 Cursor.Current = Cursors.WaitCursor;
@@ -146,11 +148,19 @@ namespace ProjektPO.Class
 
         public void go(string source)
         {
-            if (!string.IsNullOrEmpty(source))
+            if (HasFolderWritePermission(source))
             {
-                SourceDirectory = source;
+                if (!string.IsNullOrEmpty(source))
+                {
+                    SourceDirectory = source;
+                }
+                fillGrid();
             }
-            fillGrid();
+            else
+            {
+                MessageBox.Show("Brak uprawniń do tego folderu");
+            }
+            
         }
 
 
@@ -182,6 +192,22 @@ namespace ProjektPO.Class
                     return pi;
             }
             return null;
+        }
+
+        public List<PanelItem> getItems(string[] path)
+        {
+            List<PanelItem> x = new List<PanelItem>();
+            foreach (PanelItem pi in item)
+            {
+                foreach(string s in path)
+                {
+                    if (pi.Path == s)
+                        x.Add(pi);
+                }
+                
+            }
+            if (x.Count == 0) return null;
+            return x;
         }
 
         public void pasteItem(PanelItem item,string source)
@@ -221,10 +247,12 @@ namespace ProjektPO.Class
                                     File.Delete(destfile);
                                 if (x == "copy")
                                     destfile = getCoppyFile(destfile);
+
+                                File.Move(file, destfile);
                             }
                         }
                     }
-                    File.Move(file, destfile);
+                    
                 }
             }
             catch (FileNotFoundException ex)
@@ -292,12 +320,14 @@ namespace ProjektPO.Class
                                 if (settingsForm.Value == "copy")
                                     destdirectory = getCoppyDirectory(destdirectory);
 
+                                Directory.Move(file, destdirectory);
+
                             }
                         }
 
                     }
 
-                    Directory.Move(file, destdirectory);
+                    
 
                 }
             }
@@ -332,6 +362,20 @@ namespace ProjektPO.Class
             }
             Directory.CreateDirectory(newDir);
             
-        }       
+        }
+
+        private bool HasFolderWritePermission(string destDir)
+        {
+            if (string.IsNullOrEmpty(destDir) || !Directory.Exists(destDir)) return false;
+            try
+            {
+                new DirectoryInfo(destDir).GetDirectories();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

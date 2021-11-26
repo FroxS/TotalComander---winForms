@@ -22,6 +22,7 @@ namespace ProjektPO.Viev
         private Label lab;
         private ComboBox cmb;
         private TextBox search;
+        private string lastNameBeforeRename;
 
         internal PanelComander Pc { get => pc; set => pc = value; }
 
@@ -39,8 +40,12 @@ namespace ProjektPO.Viev
             this.cmb.SelectedIndexChanged += new EventHandler(this.changeDrive);
             this.search.TextChanged += new EventHandler(this.searchFiles);
             this.search.KeyDown += new KeyEventHandler(this.searchFilesDel);
-        }   
+            dataGrid.CellValueChanged += new DataGridViewCellEventHandler(this.renameRow);
+
+        }
+
         
+
         private void changeDrive(object sendler, EventArgs e)
         {
             if (Directory.Exists(cmb.Text))
@@ -69,35 +74,27 @@ namespace ProjektPO.Viev
                 {
                     pc.fillGrid("*");
                 }
-            }
-            
-
+            }           
         }
 
 
         //Grid from drop
         private void dataGrid_MouseDown(object sender, MouseEventArgs e)
         {
-            // Get the index of the item the mouse is below.
+            //Pobranie indexu zabranej komórki
             var hittestInfo = dataGrid.HitTest(e.X, e.Y);
 
             if (hittestInfo.RowIndex != -1 && hittestInfo.ColumnIndex != -1 && hittestInfo.RowIndex != 0 && hittestInfo.ColumnIndex != 0)
             {
-                //valueFromMouseDown = dataGrid1.Rows[hittestInfo.RowIndex].Cells[hittestInfo.ColumnIndex].Value;
                 valueFromMouseDown = dataGrid.Rows[hittestInfo.RowIndex].Cells[0].Value;
                 if (valueFromMouseDown != null)
-                {
-                    // Remember the point where the mouse down occurred. 
-                    // The DragSize indicates the size that the mouse can move 
-                    // before a drag event should be started.                
+                { 
                     Size dragSize = SystemInformation.DragSize;
-                    // Create a rectangle using the DragSize, with the mouse position being
-                    // at the center of the rectangle.
                     dragBoxFromMouseDown = new Rectangle(new Point(e.X - (dragSize.Width / 2), e.Y - (dragSize.Height / 2)), dragSize);
                 }
             }
             else
-                // Reset the rectangle if the mouse is not over an item in the ListBox.
+                // Reset 
                 dragBoxFromMouseDown = Rectangle.Empty;
         }
 
@@ -106,10 +103,8 @@ namespace ProjektPO.Viev
         {
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
-                // If the mouse moves outside the rectangle, start the drag.
                 if (dragBoxFromMouseDown != Rectangle.Empty && !dragBoxFromMouseDown.Contains(e.X, e.Y))
-                {
-                    // Proceed with the drag and drop, passing in the list item.                    
+                {                  
                     DragDropEffects dropEffect = this.dataGrid.DoDragDrop(valueFromMouseDown, DragDropEffects.Copy);
                 }
             }
@@ -118,11 +113,8 @@ namespace ProjektPO.Viev
         //Grid to drop
         private void dataGrid_DragDrop(object sender, DragEventArgs e)
         {
-            // The mouse locations are relative to the screen, so they must be 
-            // converted to client coordinates.
             Point clientPoint = dataGrid.PointToClient(new Point(e.X, e.Y));
 
-            // If the drag operation was a copy then add the row to the other control.
             if (e.Effect == DragDropEffects.Copy)
             {
                 string cellvalue = e.Data.GetData(typeof(string)) as string;
@@ -272,12 +264,81 @@ namespace ProjektPO.Viev
 
         private void dataGrid_MouseClick(object sender, MouseEventArgs e)
         {
-            if(e.Button.ToString() == "Left")
+
+            if(e.Button == MouseButtons.Right)
+            {
+                var hti = dataGrid.HitTest(e.X, e.Y);
+                dataGrid.ClearSelection();
+                dataGrid.Rows[hti.RowIndex].Selected = true;
+            }               
+
+            if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
             {
                 if(this == ((TotalComander)GetParentForm(this)).LeftPanelGrid)
                     ((TotalComander)GetParentForm(this)).RightPanelGrid.dataGrid.ClearSelection();
                 else
                     ((TotalComander)GetParentForm(this)).LeftPanelGrid.dataGrid.ClearSelection();
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();               
+
+                int currentMouseOverRow = dataGrid.HitTest(e.X, e.Y).RowIndex;
+
+                if (currentMouseOverRow >= 0)
+                {
+                    
+                    m.MenuItems.Add(new MenuItem("Zmień nazwę") { 
+                        Tag = currentMouseOverRow
+                    });
+                }
+
+                m.Show(dataGrid, new Point(e.X, e.Y));
+                m.MenuItems[0].Click += new EventHandler(this.RenameFille);
+
+            }
+        }
+
+        private void RenameFille(object sender, EventArgs e)
+        {
+            MenuItem mi = sender as MenuItem;
+            if (mi is null) return;
+            dataGrid[2,(int)mi.Tag].ReadOnly = false;
+            lastNameBeforeRename = dataGrid[0, (int)mi.Tag].Value.ToString();
+            dataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
+            dataGrid.BeginEdit(true);
+        }
+
+        private void renameRow(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                //if (isDirectory(lastNameBeforeRename))
+                DataGridView dvg = sender as DataGridView;
+                string newName = Path.GetFileNameWithoutExtension(dvg[e.ColumnIndex, e.RowIndex].Value.ToString());
+                string newPath = Path.GetDirectoryName(lastNameBeforeRename) + "\\" + newName + Path.GetExtension(lastNameBeforeRename);
+                int i = 0;
+
+                if (!isDirectory(lastNameBeforeRename))
+                    while (File.Exists(newPath))
+                        newPath = Path.GetDirectoryName(lastNameBeforeRename) + "\\" + Path.GetFileNameWithoutExtension(newPath) + "(" + i++ + ")" + Path.GetExtension(newPath);
+                else
+                    while (Directory.Exists(newPath))
+                        newPath = newPath + "(" + i++ + ")";
+
+
+                if (isDirectory(lastNameBeforeRename))
+                    Directory.Move(lastNameBeforeRename, newPath);
+                else
+                    File.Move(lastNameBeforeRename, newPath);
+                dvg[e.ColumnIndex, e.RowIndex].ReadOnly = true;
+                dvg.BeginEdit(false);
+                dvg.CancelEdit();
+                pc.fillGrid();
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
